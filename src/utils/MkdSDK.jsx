@@ -111,7 +111,9 @@ export default function MkdSDK() {
 
   this.check = async function (role) {
     try{
-       const res = await fetch('https://reacttask.mkdlabs.com/v2/api/lambda/check',{
+      const token = localStorage.getItem("token")
+      if(token){
+         const res = await fetch('https://reacttask.mkdlabs.com/v2/api/lambda/check',{
           method: 'POST',
           body:JSON.stringify({role}),
           headers:{
@@ -122,6 +124,11 @@ export default function MkdSDK() {
      })
      const data = await res.json()
      return data
+      }
+      else{
+        const data = {error:true}
+        return data
+      }
     }
     catch(err){
       return err

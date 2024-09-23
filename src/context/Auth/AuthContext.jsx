@@ -19,13 +19,10 @@ const reducer =async (state, action) => {
       return {
         ...state,
         isAuthenticated: true,
+        role:'admin'
       };
      }
-      return {
-        ...state,
-        isAuthenticated: false,
-        user: null,
-      }
+      return state
     }
     case "LOGOUT":
       localStorage.clear();
@@ -55,7 +52,22 @@ const AuthProvider = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
 
   React.useEffect(() => {
-    //TODO
+   const checkAuthentication = async()=>{
+    try{
+      const status = await sdk.check('admin')
+       if(!status.error){
+         console.log('Authenticated')
+         return dispatch({isAuthenticated: true,
+           role: admin,})
+        }
+        console.log('not Authenticated')
+         return dispatch(initialState)
+     }
+     catch(err){
+       return err
+     }
+   }
+   checkAuthentication()
   }, []);
 
   return (
