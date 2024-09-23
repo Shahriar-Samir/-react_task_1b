@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
 import SnackBar from "Components/SnackBar";
 import { AuthContext } from "Context/Auth";
@@ -38,6 +38,14 @@ function renderRoutes(role) {
 
 function Main() {
   const { state } = React.useContext(AuthContext);
+
+  useEffect(()=>{
+     async function doo(){
+        const res = await state
+        console.log(res)
+      }
+      doo()
+  },[state])
 
   return (
     <div className="h-full">

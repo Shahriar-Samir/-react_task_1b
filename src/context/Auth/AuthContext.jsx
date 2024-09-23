@@ -11,28 +11,28 @@ const initialState = {
 export const AuthContext = React.createContext(initialState);
 
 const reducer =async (state, action) => {
+  const stateRes = await state
   switch (action.type) {
     case "LOGIN":{
      const status = await sdk.check('admin')
      if(!status.error){
-      console.log('Authenticated')
       return {
-        ...state,
+        ...stateRes,
         isAuthenticated: true,
         role:'admin'
       };
      }
-      return state
+      return stateRes
     }
     case "LOGOUT":
-      localStorage.clear();
+      localStorage.clear()
       return {
-        ...state,
+        ...stateRes,
         isAuthenticated: false,
         user: null,
-      };
+    };
     default:
-      return state;
+      return stateRes;
   }
 };
 
@@ -51,23 +51,10 @@ export const tokenExpireError = (dispatch, errorMessage) => {
 const AuthProvider = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
 
+
+
   React.useEffect(() => {
-   const checkAuthentication = async()=>{
-    try{
-      const status = await sdk.check('admin')
-       if(!status.error){
-         console.log('Authenticated')
-         return dispatch({isAuthenticated: true,
-           role: admin,})
-        }
-        console.log('not Authenticated')
-         return dispatch(initialState)
-     }
-     catch(err){
-       return err
-     }
-   }
-   checkAuthentication()
+        dispatch({type: 'LOGIN'})
   }, []);
 
   return (

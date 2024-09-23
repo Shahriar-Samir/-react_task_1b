@@ -123,6 +123,10 @@ export default function MkdSDK() {
           }
      })
      const data = await res.json()
+     if(data.error){
+      localStorage.removeItem('token')
+      return data
+     }
      return data
       }
       else{
