@@ -35,7 +35,7 @@ const AdminLoginPage = () => {
     const role = 'admin'
     const loggedIn = await sdk.login(email,password,role)
     if(loggedIn){
-      global.toastStatus('Success')
+      global.dispatch({ type: "SNACKBAR", payload: { message: "Signed In Successfully",  toastStatus:"success" } })
     }
   };
 
