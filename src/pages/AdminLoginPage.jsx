@@ -5,6 +5,9 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import MkdSDK from "Utils/MkdSDK";
 import { AuthContext } from "Context/Auth";
+import SnackBar from "Components/SnackBar";
+import { GlobalContext } from "Context/Global";
+
 
 const AdminLoginPage = () => {
   const schema = yup
@@ -15,6 +18,7 @@ const AdminLoginPage = () => {
     .required();
 
   const { dispatch } = React.useContext(AuthContext);
+  const global = React.useContext(GlobalContext);
   const navigate = useNavigate();
   const {
     register,
@@ -27,11 +31,17 @@ const AdminLoginPage = () => {
 
   const onSubmit = async (data) => {
     let sdk = new MkdSDK();
-    //TODO
+    const {email,password} = data 
+    const role = 'admin'
+    const loggedIn = await sdk.login(email,password,role)
+    if(loggedIn){
+      global.toastStatus('Success')
+    }
   };
 
   return (
     <div className="w-full max-w-xs mx-auto">
+      <SnackBar/>
       <form
         onSubmit={handleSubmit(onSubmit)}
         className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 mt-8 "
