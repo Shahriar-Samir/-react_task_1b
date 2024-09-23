@@ -10,14 +10,23 @@ const initialState = {
 
 export const AuthContext = React.createContext(initialState);
 
-const reducer = (state, action) => {
+const reducer =async (state, action) => {
   switch (action.type) {
-    case "LOGIN":
-      console.log('loggedin')
+    case "LOGIN":{
+     const status = await sdk.check('admin')
+     if(!status.error){
+      console.log('Authenticated')
       return {
         ...state,
         isAuthenticated: true,
       };
+     }
+      return {
+        ...state,
+        isAuthenticated: false,
+        user: null,
+      }
+    }
     case "LOGOUT":
       localStorage.clear();
       return {
