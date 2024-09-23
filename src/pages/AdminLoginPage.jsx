@@ -33,10 +33,11 @@ const AdminLoginPage = () => {
     let sdk = new MkdSDK();
     const {email,password} = data 
     const role = 'admin'
-    const loggedIn = await sdk.login(email,password,role)
-    if(loggedIn){
-      global.dispatch({ type: "SNACKBAR", payload: { message: "Signed In Successfully",  toastStatus:"success" } })
+    const logInStatus = await sdk.login(email,password,role)
+    if(!logInStatus.error){
+     return global.dispatch({ type: "SNACKBAR", payload: { message: "Signed In Successfully",  toastStatus:"success",} })
     }
+    return global.dispatch({ type: "SNACKBAR", payload: { message: logInStatus.message,  toastStatus:"error",} })
   };
 
   return (
