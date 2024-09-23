@@ -35,9 +35,17 @@ const AdminLoginPage = () => {
     const role = 'admin'
     const logInStatus = await sdk.login(email,password,role)
     if(!logInStatus.error){
-     return global.dispatch({ type: "SNACKBAR", payload: { message: "Signed In Successfully",  toastStatus:"success",} })
+     global.dispatch({ type: "SNACKBAR", payload: { message: "Signed In Successfully",  toastStatus:"success",} })
+     return setTimeout(() => {
+      global.dispatch({ type: "SNACKBAR", payload: { message: "",  toastStatus:"success",} })
+    }, 3000);
     }
-    return global.dispatch({ type: "SNACKBAR", payload: { message: logInStatus.message,  toastStatus:"error",} })
+    global.dispatch({ type: "SNACKBAR", payload: { message: logInStatus.message,  toastStatus:"error",} })
+    return setTimeout(() => {
+      global.dispatch({ type: "SNACKBAR", payload: { message: "",  toastStatus:"success",} })
+    }, 3000);
+  
+    
   };
 
   return (

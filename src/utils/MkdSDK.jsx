@@ -35,7 +35,7 @@ export default function MkdSDK() {
         return data
        }
        catch(err){
-          console.log(err.message)
+          return err
        }
 
   };
