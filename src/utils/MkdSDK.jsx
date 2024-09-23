@@ -110,7 +110,20 @@ export default function MkdSDK() {
   };  
 
   this.check = async function (role) {
-    //TODO
+    try{
+       const res = await fetch('https://reacttask.mkdlabs.com/v2/api/lambda/check',{
+          method: 'POST',
+          body:JSON.stringify({role}),
+          headers:{
+            'content-type': 'application/json',
+            'x-project':'cmVhY3R0YXNrOmQ5aGVkeWN5djZwN3p3OHhpMzR0OWJtdHNqc2lneTV0Nw==',
+            Authorization: "Bearer " + localStorage.getItem("token"),
+          }
+     })
+    }
+    catch(err){
+      return err
+    }
   };
 
   return this;
