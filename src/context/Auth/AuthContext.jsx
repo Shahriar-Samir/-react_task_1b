@@ -13,9 +13,10 @@ export const AuthContext = React.createContext(initialState);
 const reducer = (state, action) => {
   switch (action.type) {
     case "LOGIN":
-      //TODO
+      console.log('loggedin')
       return {
         ...state,
+        isAuthenticated: true,
       };
     case "LOGOUT":
       localStorage.clear();
